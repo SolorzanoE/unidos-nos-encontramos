@@ -5,7 +5,7 @@
 *.sublime-project   # Sublime Text
 
 # Archivos de configuración específicos de MacOS
-.DS_Store           # macOS file system metadata
+*.DS_Store           # macOS file system metadata
 
 # Archivos de configuración de Thumbs.db en Windows
 Thumbs.db           # Windows image cache
@@ -60,6 +60,3 @@ DerivedData/        # Datos derivados de Xcode
 
 # Archivos de configuración de servicios de nube
 .vscode/            # Carpeta de configuración de VS Code
-
-# Ignorar archivos de sistemas de control de versiones
-*.gitignore         # Ignorar este archivo de configuración
