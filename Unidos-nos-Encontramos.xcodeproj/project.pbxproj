@@ -10,9 +10,22 @@
 		BDAC45A72D8FE4720003B495 /* Unidos-nos-Encontramos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unidos-nos-Encontramos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		39E0608F2D90F7B800D28D38 /* Exceptions for "Unidos-nos-Encontramos" folder in "Unidos-nos-Encontramos" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BDAC45A62D8FE4720003B495 /* Unidos-nos-Encontramos */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BDAC45A92D8FE4720003B495 /* Unidos-nos-Encontramos */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				39E0608F2D90F7B800D28D38 /* Exceptions for "Unidos-nos-Encontramos" folder in "Unidos-nos-Encontramos" target */,
+			);
 			path = "Unidos-nos-Encontramos";
 			sourceTree = "<group>";
 		};
@@ -254,6 +267,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Unidos-nos-Encontramos/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Unidos-nos-Encontramos/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -282,6 +296,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Unidos-nos-Encontramos/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Unidos-nos-Encontramos/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
