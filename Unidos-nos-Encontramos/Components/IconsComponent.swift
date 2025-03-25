@@ -32,19 +32,19 @@ enum IconStyle {
 }
 
 struct IconsComponent: View {
-    var isActive: Bool
-        var style: IconStyle
-
-        var body: some View {
-            Image(systemName: style.icon)
-                .frame(minWidth: 45, minHeight: 45)
-                .foregroundStyle(isActive ? Color.blue500 : Color.blue50)
-                .background(isActive ? Color.blue50 : Color.blue500)
-                .clipShape(Circle())
-                .animation(.easeInOut(duration: 0.2), value: isActive)
-        }
+    var changeColor: Bool = false
+    let style: IconStyle
+    
+    var body: some View {
+        Image(systemName: style.icon)
+            .frame(minWidth: 45, minHeight: 45)
+            .foregroundStyle(changeColor ? Color.blue500 : Color.blue50)
+            .background(changeColor ? Color.blue50 : Color.blue500)
+            .clipShape(Circle())
+            .animation(.easeInOut(duration: 0.2), value: changeColor)
     }
+}
 
 #Preview {
-    IconsComponent(isActive: false, style: IconStyle.map)
+    IconsComponent(style: IconStyle.map)
 }

@@ -12,7 +12,7 @@ enum SideButtonStyle {
     
     var icon: String {
         switch self {
-        
+            
         case .home:
             return "house.fill"
         case .alerts:
@@ -23,10 +23,10 @@ enum SideButtonStyle {
             return "power"
         }
     }
-
+    
     var title: String {
         switch self {
-        
+            
         case .home:
             return "Inicio"
         case .alerts:
@@ -41,32 +41,33 @@ enum SideButtonStyle {
 
 struct SideButtonComponent: View {
     @State private var isPressed: Bool = false
-    var style: SideButtonStyle
-    var action: () -> Void
-
+    let style: SideButtonStyle
+    var action: () -> Void = {}
+    
     var body: some View {
         Button(action: {
-            isPressed.toggle()
             action()
         }) {
             HStack{
                 Image(systemName: style.icon)
-                    .foregroundStyle(isPressed ? Color.blue500 : Color.blue50)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24)
+                    .foregroundStyle(isPressed ? Color.blue500 : Color.white500)
                     .padding(.leading)
-                TextComponent(text: style.title, Style: .body)
-                .fontWeight(.medium)
-                .foregroundColor(isPressed ? Color.blue500 : Color.blue50)
                 
-            
-        }
+                TextComponent(text: style.title, style: .body)
+                    .fontWeight(.medium)
+                    .foregroundStyle(isPressed ? Color.grey500 : Color.white500)
+            }
             .frame(minWidth: 208, minHeight: 39, alignment: .leading)
-                .background(isPressed ? Color.blue50 : Color.blue500)
-                .cornerRadius(20)
-                .animation(.easeInOut(duration: 0.2), value: isPressed)
-        }
+            .background(isPressed ? Color.blue50 : Color.blue500)
+            .cornerRadius(20)
+            .animation(.easeInOut(duration: 0.2), value: isPressed)
+        }.shadow(color: .black.opacity(0.25), radius: 4, y: 4)
     }
 }
 
 #Preview {
-    SideButtonComponent(style: SideButtonStyle.close, action: {})
+    SideButtonComponent(style: SideButtonStyle.close)
 }

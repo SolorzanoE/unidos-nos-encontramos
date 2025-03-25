@@ -27,14 +27,14 @@ enum FontStyle {
 
 struct TextComponent: View {
     var text: String
-    var Style: FontStyle
+    var style: FontStyle
 
     var body: some View {
         Text(text)
-            .font(.custom("Montserrat", size: Style.size))
+            .font(.custom("Montserrat", size: style.size))
     }
 }
 
 #Preview {
-    TextComponent(text: "Hello", Style: .largeTitle)
+    TextComponent(text: "Hello", style: .largeTitle)
 }
