@@ -64,12 +64,12 @@ struct FieldView: View {
             let showError = isRequired && text.trimmingCharacters(in: .whitespaces).isEmpty && showValidation
 
             HStack(spacing: 2) {
-                TextComponent(text: labelText, Style: .body)
+                TextComponent(text: labelText, style: .body)
                     .fontWeight(.semibold)
                     .foregroundStyle(.grey500)
 
                 if isRequired {
-                    TextComponent(text: "*", Style: .body)
+                    TextComponent(text: "*", style: .body)
                         .foregroundStyle(.red400)
                         .fontWeight(.semibold)
                 }
@@ -79,7 +79,7 @@ struct FieldView: View {
                
 
             if showError {
-                TextComponent(text: "Este campo es obligatorio", Style: .caption)
+                TextComponent(text: "Este campo es obligatorio", style: .caption)
                     .foregroundStyle(.red400)
                     .fontWeight(.semibold)
             }
@@ -88,10 +88,5 @@ struct FieldView: View {
 }
 
 #Preview {
-    @Previewable @State var name = ""
-
-    VStack(spacing: 20) {
-        FieldView(labelType: .textField, labelText: "Nombre", connector: "tu", text: $name, isRequired: true, showValidation: true, fontSize: 16)
-    }
-    .padding()
+    FieldView(labelType: .textField, labelText: "Nombre", connector: "tu", text: .constant(""), isRequired: true, showValidation: true, fontSize: 16)
 }

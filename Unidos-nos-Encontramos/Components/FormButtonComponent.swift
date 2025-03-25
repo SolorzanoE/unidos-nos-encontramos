@@ -38,15 +38,16 @@ enum CustomButtonStyle {
 }
 
 struct FormButtonComponent: View {
-    var style: CustomButtonStyle
-    var action: () -> Void
+    let style: CustomButtonStyle
+    var action: () -> Void = {}
 
     var body: some View {
         Button(action: {
             action()
         }) {
-            TextComponent(text: style.title, Style: .subheadline)
+            TextComponent(text: style.title, style: .subheadline)
                 .fontWeight(.medium)
+                .padding(10)
                 .foregroundColor(.white500)
                 .frame(minWidth: 137, minHeight: 47)
                 .background(style.backgroundColor)
@@ -56,8 +57,5 @@ struct FormButtonComponent: View {
 }
 
 #Preview {
-    VStack(spacing: 20) {
-        FormButtonComponent(style: .acept, action: {});
-        
-    }
+    FormButtonComponent(style: .acept)
 }
