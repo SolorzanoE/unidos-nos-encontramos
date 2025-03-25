@@ -53,5 +53,5 @@ struct BackgroundComponent: View {
 }
 
 #Preview {
-    BackgroundComponent(style: .gradientSkyBlue)
+    BackgroundComponent(style: .gradientOceanBlue)
 }
