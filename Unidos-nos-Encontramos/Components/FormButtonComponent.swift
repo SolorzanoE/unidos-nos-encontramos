@@ -8,27 +8,31 @@
 import SwiftUI
 
 enum CustomButtonStyle {
-    case continuar, regresar, cancelar
+    case next, back, cancel, acept
 
     var backgroundColor: Color {
         switch self {
-        case .continuar:
+        case .next:
             return .blue600
-        case .regresar:
-            return .blue600
-        case .cancelar:
+        case .back:
             return .blue400
+        case .cancel:
+            return .blue400
+        case .acept:
+            return .blue600
         }
     }
 
     var title: String {
         switch self {
-        case .continuar:
+        case .next:
             return "Continuar"
-        case .regresar:
+        case .back:
             return "Regresar"
-        case .cancelar:
+        case .cancel:
             return "Cancelar"
+        case .acept:
+            return "Aceptar"
         }
     }
 }
@@ -42,20 +46,18 @@ struct FormButtonComponent: View {
             action()
         }) {
             TextComponent(text: style.title, Style: .subheadline)
-                .padding()
+                .fontWeight(.medium)
                 .foregroundColor(.white500)
-                .frame(minWidth: 137, maxWidth: .infinity, minHeight: 47)
+                .frame(minWidth: 137, minHeight: 47)
                 .background(style.backgroundColor)
                 .cornerRadius(10)
         }
-        .padding(.horizontal)
     }
 }
 
 #Preview {
     VStack(spacing: 20) {
-        FormButtonComponent(style: .continuar, action: {});
-        FormButtonComponent(style: .regresar, action: {});
-        FormButtonComponent(style: .cancelar, action: {});
+        FormButtonComponent(style: .acept, action: {});
+        
     }
 }

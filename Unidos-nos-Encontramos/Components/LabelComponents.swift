@@ -8,10 +8,47 @@
 import SwiftUI
 
 enum CustomLabel {
-    case textField
-    case secureField
-    case textArea
+    case textField, secureField, textArea
+
+    func fieldView(text: Binding<String>, placeholder: String, fontSize: CGFloat) -> some View {
+        switch self {
+        case .textField:
+            return AnyView(
+                TextField(placeholder, text: text)
+                    .font(.custom("Montserrat", size: fontSize))
+                    .foregroundStyle(.grey400)
+                    .padding(.leading)
+                    .frame(minWidth: 388, minHeight: 35)
+                    .background(Color.grey50)
+                    .cornerRadius(5)
+                    .shadow(radius: 3, y: 3)
+            )
+        case .secureField:
+            return AnyView(
+                SecureField(placeholder, text: text)
+                    .font(.custom("Montserrat", size: fontSize))
+                    .foregroundStyle(.grey400)
+                    .padding(.leading)
+                    .frame(minWidth: 388, minHeight: 35)
+                    .background(Color.grey50)
+                    .cornerRadius(5)
+                    .shadow(radius: 3, y: 3)
+            )
+        case .textArea:
+            return AnyView(
+                TextEditor(text: text)
+                    .font(.custom("Montserrat", size: fontSize))
+                    .foregroundStyle(.grey400)
+                    .background(Color.grey50)
+                    .frame(minWidth: 388, minHeight: 35)
+                    .foregroundColor(.gray)
+                    .cornerRadius(5)
+                    .shadow(radius: 3, y: 3)
+            )
+        }
+    }
 }
+
 
 struct FieldView: View {
     var labelType: CustomLabel
@@ -20,94 +57,41 @@ struct FieldView: View {
     @Binding var text: String
     var isRequired: Bool = false
     var showValidation: Bool = false
+    var fontSize: CGFloat
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 2) {
             let showError = isRequired && text.trimmingCharacters(in: .whitespaces).isEmpty && showValidation
 
-            // Etiqueta con asterisco rojo si es requerido
             HStack(spacing: 2) {
-                TextComponent(text: labelText, Style: .subheadline)
+                TextComponent(text: labelText, Style: .body)
+                    .fontWeight(.semibold)
                     .foregroundStyle(.grey500)
 
                 if isRequired {
-                    Text("*")
-                        .foregroundStyle(Color.red) // Puedes usar .red600 si está definido como extension
-                        .font(.subheadline)
+                    TextComponent(text: "*", Style: .body)
+                        .foregroundStyle(.red400)
+                        .fontWeight(.semibold)
                 }
             }
 
-            switch labelType {
-            case .textField:
-                TextField("Ingresa \(connector) \(labelText.lowercased())", text: $text)
-                    .font(.custom("Montserrat", size: 20))
-                    .foregroundStyle(.grey400)
-                    .padding(.leading)
-                    .frame(minWidth: 381, maxWidth: .infinity, minHeight: 45)
-                    .background(Color.grey50)
-                    .cornerRadius(5)
-                    .shadow(radius: 3, y: 3)
-
-            case .secureField:
-                SecureField("Ingresa \(connector) \(labelText.lowercased())", text: $text)
-                    .font(.custom("Montserrat", size: 20))
-                    .padding(.leading)
-                    .frame(minWidth: 381, maxWidth: .infinity, minHeight: 45)
-                    .background(Color.grey50)
-                    .cornerRadius(5)
-                    .shadow(radius: 3, y: 3)
-
-            case .textArea:
-                TextEditor(text: $text)
-                    .font(.custom("Montserrat", size: 20))
-                    .frame(minWidth: 381, maxWidth: .infinity, minHeight: 45)
-                    .background(Color.grey50)
-                    .foregroundStyle(.grey400)
-                    .cornerRadius(5)
-                    .shadow(radius: 3, y: 3)
-            }
+            labelType.fieldView(text: $text, placeholder: "Ingresa \(connector) \(labelText.lowercased())", fontSize: fontSize)
+               
 
             if showError {
-                Text("Este campo es obligatorio")
-                    .font(.caption)
-                    .foregroundColor(.red)
+                TextComponent(text: "Este campo es obligatorio", Style: .caption)
+                    .foregroundStyle(.red400)
+                    .fontWeight(.semibold)
             }
         }
     }
 }
 
 #Preview {
-    struct PreviewWrapper: View {
-        @State private var name = ""
-        @State private var password = ""
-        @State private var description = ""
-        @State private var showValidation = false
+    @Previewable @State var name = ""
 
-        var body: some View {
-            ScrollView {
-                VStack(spacing: 20) {
-                    FieldView(labelType: .textField, labelText: "Nombre", connector: "tu", text: $name, isRequired: true, showValidation: showValidation)
-                    FieldView(labelType: .secureField, labelText: "Contraseña", connector: "tu", text: $password, isRequired: true, showValidation: showValidation)
-                    FieldView(labelType: .textArea, labelText: "Descripción", connector: "", text: $description, isRequired: true, showValidation: showValidation)
-
-                    Button("Enviar") {
-                        showValidation = true
-                        if name.trimmingCharacters(in: .whitespaces).isEmpty || password.trimmingCharacters(in: .whitespaces).isEmpty {
-                            print("Faltan campos requeridos")
-                        } else {
-                            print("Datos enviados correctamente")
-                        }
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                }
-                .padding()
-            }
-        }
+    VStack(spacing: 20) {
+        FieldView(labelType: .textField, labelText: "Nombre", connector: "tu", text: $name, isRequired: true, showValidation: true, fontSize: 16)
     }
-
-    return PreviewWrapper()
+    .padding()
 }
