@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum NavigationButtonStyle {
-    case exit, back
+    case exit, back, side
     
     var icon: String {
         switch self {
@@ -16,8 +16,8 @@ enum NavigationButtonStyle {
             return "multiply"
         case .back:
             return "chevron.backward"
-            
-            
+        case .side:
+             return "line.3.horizontal"
         }
     }
 }
@@ -44,6 +44,6 @@ struct NavigationButtonComponent: View {
 }
 
 #Preview {
-    NavigationButtonComponent(style: .exit)
+    NavigationButtonComponent(style: .side)
         .frame(width: 45)
 }
