@@ -69,5 +69,5 @@ struct SideButtonComponent: View {
 }
 
 #Preview {
-    SideButtonComponent(style: SideButtonStyle.close)
+    SideButtonComponent(style: SideButtonStyle.alerts)
 }
