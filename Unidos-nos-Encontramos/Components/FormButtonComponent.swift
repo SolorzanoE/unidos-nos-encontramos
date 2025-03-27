@@ -20,6 +20,7 @@ enum CustomButtonStyle {
             return .blue400
         case .acept:
             return .blue600
+       
         }
     }
 
@@ -33,6 +34,7 @@ enum CustomButtonStyle {
             return "Cancelar"
         case .acept:
             return "Aceptar"
+        
         }
     }
 }
