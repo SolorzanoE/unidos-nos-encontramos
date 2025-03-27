@@ -9,17 +9,19 @@ import SwiftUI
 
 struct SearchComponent: View {
     
-    @Binding var text: String
+    @State var text: String
+    let placeholder: String
     
     var body: some View {
         
         HStack {
             Image(systemName: "magnifyingglass")
+                .foregroundStyle(.grey500)
             
             TextField(
                 "TextField",
                 text: $text,
-                prompt: Text("hola")
+                prompt: Text(placeholder)
                     .foregroundStyle(.grey400)
             ).foregroundStyle(.grey500)
                 .font(.custom("Montserrat", size: 16))
@@ -31,5 +33,5 @@ struct SearchComponent: View {
 }
 
 #Preview {
-    SearchComponent(text: .constant("Hola"))
+    SearchComponent(text: "a", placeholder: "Buscar...")
 }

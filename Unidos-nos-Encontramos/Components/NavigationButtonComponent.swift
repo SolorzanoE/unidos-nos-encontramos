@@ -37,7 +37,7 @@ struct NavigationButtonComponent: View {
                 .frame(maxWidth: 40, maxHeight: 40)
                 .fontWeight(.bold)
                 .foregroundStyle(Color.white500)
-                .background( Color.blue500)
+                .background( Color.blue700)
                 .clipShape(Circle())
         }
     }
