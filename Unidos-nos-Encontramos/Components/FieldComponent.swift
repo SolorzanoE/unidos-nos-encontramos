@@ -26,7 +26,7 @@ struct FieldComponent: View {
                         .foregroundStyle(.grey500)
                     
                     if isRequired {
-                        TextComponent(text: "*", style: .body)
+                        TextComponent(text: "*", style: fontSize)
                             .foregroundStyle(.red400)
                             .fontWeight(.semibold)
                     }
@@ -52,47 +52,75 @@ struct FieldComponent: View {
             //            }
         }
     }
-}
-
-enum TypeField {
-    case textField
-    case secureField
-    case textArea
     
-    @ViewBuilder
-    func fieldView(text: Binding<String>, placeholder: String) -> some View {
-        switch self {
-        case .textField:
-            TextField(text: text) {
-                customPlaceholder(placeholder)
-            }
-        case .secureField:
-            HStack {
-                
-                SecureField(text: text) {
+    enum TypeField {
+        case textField
+        case secureField(SecureStyle)
+        case textArea
+        
+        @ViewBuilder
+        func fieldView(text: Binding<String>, placeholder: String) -> some View {
+            switch self {
+            case .textField:
+                TextField(text: text) {
                     customPlaceholder(placeholder)
                 }
-                
-                Button {
-                    
-                } label: {
-                    Image(systemName: "eye")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundStyle(.grey400)
-                }.frame(maxWidth: 25)
+            case .secureField(let style):
+                switch style {
+                case .hidden:
+                    SecureField(text: text) {
+                        customPlaceholder(placeholder)
+                    }
+                case .show:
+                    SecureFieldComponent(password: text, placeholder: placeholder)
+                }
+            case .textArea:
+                TextEditor(text: text)
             }
-        case .textArea:
-            TextEditor(text: text)
+        }
+        
+        enum SecureStyle {
+            case hidden
+            case show
         }
     }
+}
+
+private struct SecureFieldComponent: View {
     
-    private func customPlaceholder(_ text: String) -> some View {
-        Text(text)
-            .foregroundStyle(.grey400)
+    @State private var showPassword = false
+    @Binding var password: String
+    let placeholder: String
+    
+    var body: some View {
+        
+        HStack(alignment: .center) {
+            if showPassword {
+                TextField(text: $password) {
+                    customPlaceholder(placeholder)
+                }
+            } else {
+                SecureField(text: $password) {
+                    customPlaceholder(placeholder)
+                }
+            }
+            
+            Button {
+                showPassword.toggle()
+            } label: {
+                Image(systemName: showPassword ? "eye.slash" : "eye")
+                    .foregroundStyle(.grey400)
+            }.frame(maxWidth: 25)
+        }
     }
+}
+
+// MARK: - file utils functions
+private func customPlaceholder(_ text: String) -> some View {
+    Text(text)
+        .foregroundStyle(.grey400)
 }
 
 #Preview {
-    FieldComponent(type: .secureField, name: "Nombre", placeholder: "Ingresa tu nombre", text: .constant(""))
+    FieldComponent(type: .secureField(.show), name: "Contraseña", placeholder: "Ingresa tu contraseña", text: .constant(""), fontSize: .body)
 }
