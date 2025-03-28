@@ -12,7 +12,7 @@ struct ReportedPersonsView: View {
         
         ZStack {
             VStack(alignment: .leading){
-                SearchComponent(text: "a")
+                SearchComponent(text: "a", placeholder: "")
                     .padding(.bottom,15)
                 TextComponent(text: "Personas reportadas desaparecidas", style: .subheadline)
                     .fontWeight(.semibold)
