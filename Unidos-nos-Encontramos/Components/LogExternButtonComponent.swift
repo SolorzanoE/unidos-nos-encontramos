@@ -49,12 +49,12 @@ struct LogExternButtonComponent: View {
                     .scaledToFit()
                     .frame(width: 26.85)
                 TextComponent(text: style.title, style: .subheadline)
-                    .foregroundColor(.black)
+                    .foregroundColor(.grey500)
                     .fontWeight(.medium)
             }.frame(maxWidth: .infinity, minHeight: 45)
         }.background(.white400)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius:3, y: 3)
+            .shadow(color: .black.opacity(0.25), radius: 6, y: 3)
     }
 }
 

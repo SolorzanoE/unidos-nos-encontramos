@@ -28,7 +28,7 @@ struct SearchComponent: View {
         }.padding(8)
             .background()
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(color: .black.opacity(0.25),radius: 7)
+            .shadow(color: .black.opacity(0.25), radius: 7)
     }
 }
 

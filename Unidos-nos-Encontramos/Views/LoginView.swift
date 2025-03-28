@@ -9,6 +9,9 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @State var email = ""
+    @State var password = ""
+    
     var body: some View {
         
         ZStack(alignment: .bottom) {
@@ -16,16 +19,18 @@ struct LoginView: View {
             
             VStack {
                 
-                TextField("", text: .constant("aaa"))
+                FieldComponent(type: .textField, name: "Correo Electrónico", placeholder: "Ingresa tu correo", text: $email, fontSize: .body)
                 
-                TextField("", text: .constant("aaa"))
-                
-                TextComponent(text: "Olvidé mi contraseña", style: .callout)
-                    .foregroundStyle(.blue400)
-                
-                Button("Iniciar Sesion") {
+                VStack(alignment: .trailing, spacing: 10) {
+                    FieldComponent(type: .secureField, name: "Contraseña", placeholder: "Ingresa tu contraseña", text: $password, fontSize: .body)
                     
-                }.padding(.vertical)
+                    TextComponent(text: "Olvidé mi contraseña", style: .callout)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.blue400)
+                }.padding(.vertical, 10)
+                
+                JourneyButtonComponent(text: "Iniciar Sesión")
+                    .padding(.top, 10)
                 
                 customDivider()
                 
@@ -36,15 +41,17 @@ struct LoginView: View {
                     
                     LogExternButtonComponent(style: .facebook)
                 }
-                    
+                
                 customDivider()
-
+                
                 footer()
             }.padding(.horizontal)
-                .padding(.vertical, 25)
+                .padding(.bottom, 25)
+                .padding(.top, 30)
                 .frame(maxWidth: .infinity)
                 .background(.white500)
                 .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20))
+                .shadow(color: .black.opacity(0.5), radius: 10)
         }.ignoresSafeArea(edges: .bottom)
     }
     
