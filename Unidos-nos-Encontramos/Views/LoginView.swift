@@ -11,6 +11,7 @@ struct LoginView: View {
     
     @State var email = ""
     @State var password = ""
+    @State private var showPassword = false
     
     var body: some View {
         
@@ -22,7 +23,8 @@ struct LoginView: View {
                 FieldComponent(type: .textField, name: "Correo Electrónico", placeholder: "Ingresa tu correo", text: $email, fontSize: .body)
                 
                 VStack(alignment: .trailing, spacing: 10) {
-                    FieldComponent(type: .secureField, name: "Contraseña", placeholder: "Ingresa tu contraseña", text: $password, fontSize: .body)
+                    
+                    FieldComponent(type: .secureField(.show), name: "Contraseña", placeholder: "Ingresa tu contraseña", text: $password, fontSize: .body)
                     
                     TextComponent(text: "Olvidé mi contraseña", style: .callout)
                         .fontWeight(.medium)
@@ -40,7 +42,7 @@ struct LoginView: View {
                     LogExternButtonComponent(style: .apple)
                     
                     LogExternButtonComponent(style: .facebook)
-                }
+                }.padding(.horizontal)
                 
                 customDivider()
                 
@@ -48,7 +50,6 @@ struct LoginView: View {
             }.padding(.horizontal)
                 .padding(.bottom, 25)
                 .padding(.top, 30)
-                .frame(maxWidth: .infinity)
                 .background(.white500)
                 .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20))
                 .shadow(color: .black.opacity(0.5), radius: 10)
