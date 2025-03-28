@@ -12,14 +12,23 @@ struct PersonReportedBoxComponent: View {
     let gender: String
     let dateSucess: String
     let edad: Int
-    let picture: String
+    let picture: String?
     var body: some View {
         VStack{
-            Image(picture)
-                .resizable()
-                .scaledToFit()
-                .padding()
-                .frame(minWidth: 196, minHeight: 160)
+            if let picture = picture{
+                Image(picture)
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                    .frame(minWidth: 156, minHeight: 120)
+            } else {
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.blue600)
+                    .padding()
+                    .frame(minWidth: 156, minHeight: 120)
+            }
             TextComponent(text: name, style: .body)
                 .fontWeight(.medium)
                 .foregroundStyle(.grey500)
@@ -33,20 +42,19 @@ struct PersonReportedBoxComponent: View {
                     TextComponent(text: "Edad actual: \(edad) años", style: .callout)
                     TextComponent(text: "Género: \(gender)", style: .callout)
                     TextComponent(text: "Fecha de los hechos: \(dateSucess)", style: .callout)
-                }
-                .fontWeight(.light)
-                .padding(.trailing)
+                }.fontWeight(.light)
+                    .padding(.trailing)
                 
             }
         }
         .background(Color.grey50)
         .clipShape(RoundedRectangle(cornerRadius: 5))
-        .frame(width: 193, height: 273)
+        .frame(width: 163, height: 243)
         .shadow(radius: 4, y: 4)
         
     }
 }
 
 #Preview {
-    PersonReportedBoxComponent(name: "Emmanuel Erants", gender: "Masculino", dateSucess: "02/02/2025", edad: 19, picture: "Person")
+    PersonReportedBoxComponent(name: "Emmanuel Erants", gender: "Masculino", dateSucess: "02/02/2025", edad: 19, picture: nil)
 }

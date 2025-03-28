@@ -87,8 +87,8 @@ enum TabItem: CaseIterable {
     var view: some View {
         switch self {
         case .search:
-            Text("Hola")
-            //SearchPeopleView()
+          
+            SearchPeopleView()
         case .home:
             HomeView()
         case .contact:
