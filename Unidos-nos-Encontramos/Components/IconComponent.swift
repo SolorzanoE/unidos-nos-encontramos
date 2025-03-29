@@ -31,7 +31,7 @@ enum IconStyle {
     }
 }
 
-struct IconsComponent: View {
+struct IconComponent: View {
     var changeColor: Bool = false
     let style: IconStyle
     
@@ -46,5 +46,5 @@ struct IconsComponent: View {
 }
 
 #Preview {
-    IconsComponent(style: IconStyle.map)
+    IconComponent(style: IconStyle.map)
 }

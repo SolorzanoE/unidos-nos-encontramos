@@ -8,30 +8,36 @@
 import SwiftUI
 
 struct TabView: View {
+    
     @State private var selectedTab: TabItem = .home
     
     var body: some View {
         
         ZStack {
-            selectedTab.view
-                .frame(maxHeight: .infinity)
-        }.safeAreaInset(edge: .bottom) {
-            LazyVGrid(columns: gridColumns) {
-                ForEach(TabItem.allCases, id: \.self) { element in
-                    Button {
-                        selectedTab = element
-                    } label: {
-                        iconTabView(iconName: element.icon, description: element.title)
-                            .foregroundStyle(selectedTab == element ? .blue500 : .grey500)
-                            .symbolVariant(selectedTab == element ? .fill : .none)
+            
+            ZStack {
+                selectedTab.view
+                    .frame(maxWidth: .infinity ,maxHeight: .infinity)
+            }.safeAreaInset(edge: .bottom) {
+                LazyVGrid(columns: gridColumns) {
+                    
+                    ForEach(TabItem.allCases, id: \.self) { element in
+                        
+                        Button {
+                            selectedTab = element
+                        } label: {
+                            iconTabView(iconName: element.icon, description: element.title)
+                                .foregroundStyle(selectedTab == element ? .blue500 : .grey500)
+                                .symbolVariant(selectedTab == element ? .fill : .none)
+                        }
                     }
-                }
-            }.padding(10)
-                .padding(.bottom, 10)
-                .background(.grey50)
-                .compositingGroup()
-                .shadow(color: .black.opacity(0.25), radius: 10, y: -5)
-        }.ignoresSafeArea(edges: .bottom)
+                }.padding(10)
+                    .padding(.bottom, 10)
+                    .background(.grey50)
+                    .compositingGroup()
+                    .shadow(color: .black.opacity(0.25), radius: 10, y: -5)
+            }.ignoresSafeArea(edges: .bottom)
+        }
     }
     
     var gridColumns: [GridItem] {
@@ -50,7 +56,7 @@ struct TabView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 30, height: 30)
-                
+            
             TextComponent(text: description, style: .caption)
                 .fontWeight(.medium)
                 .lineLimit(1)
@@ -87,16 +93,13 @@ enum TabItem: CaseIterable {
     var view: some View {
         switch self {
         case .search:
-          
             SearchPeopleView()
         case .home:
             HomeView()
         case .contact:
-            Text("hola")
-            //ContactView()
+            ContactView()
         case .searchCard:
-            // nose
-            Text("hola")
+            SearchCardView()
         }
     }
 }

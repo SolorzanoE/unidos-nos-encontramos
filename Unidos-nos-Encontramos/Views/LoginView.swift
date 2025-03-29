@@ -34,7 +34,7 @@ struct LoginView: View {
                 JourneyButtonComponent(text: "Iniciar Sesión")
                     .padding(.top, 10)
                 
-                customDivider()
+                DividerComponent()
                 
                 VStack(spacing: 20) {
                     LogExternButtonComponent(style: .google)
@@ -44,7 +44,7 @@ struct LoginView: View {
                     LogExternButtonComponent(style: .facebook)
                 }.padding(.horizontal)
                 
-                customDivider()
+                DividerComponent()
                 
                 footer()
             }.padding(.horizontal)
@@ -65,12 +65,6 @@ struct LoginView: View {
             }.foregroundStyle(.blue400)
         }.font(.custom("Montserrat", size: 13))
             .foregroundStyle(.grey500)
-    }
-    
-    func customDivider() -> some View {
-        Rectangle()
-            .frame(height: 1)
-            .padding(.vertical)
     }
 }
 
