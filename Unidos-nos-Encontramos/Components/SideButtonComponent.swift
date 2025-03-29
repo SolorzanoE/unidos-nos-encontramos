@@ -7,15 +7,16 @@
 
 import SwiftUI
 
+// Esto es excederse con el enum, pero va
 enum SideButtonStyle {
-    case home, alerts, configuration, close
+    case home, alert, configuration, close
     
     var icon: String {
         switch self {
             
         case .home:
             return "house.fill"
-        case .alerts:
+        case .alert:
             return "exclamationmark.triangle.fill"
         case .configuration:
             return "gearshape.fill"
@@ -29,7 +30,7 @@ enum SideButtonStyle {
             
         case .home:
             return "Inicio"
-        case .alerts:
+        case .alert:
             return "Alertas"
         case .configuration:
             return "Configuración"
@@ -40,34 +41,35 @@ enum SideButtonStyle {
 }
 
 struct SideButtonComponent: View {
-    @State private var isPressed: Bool = false
+    
+    var isPressed: Bool = false
     let style: SideButtonStyle
     var action: () -> Void = {}
     
     var body: some View {
-        Button(action: {
+        Button {
             action()
-        }) {
-            HStack{
+        } label: {
+            HStack {
                 Image(systemName: style.icon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24)
-                    .foregroundStyle(isPressed ? Color.blue500 : Color.white500)
-                    .padding(.leading)
                 
                 TextComponent(text: style.title, style: .body)
                     .fontWeight(.medium)
-                    .foregroundStyle(isPressed ? Color.grey500 : Color.white500)
-            }
-            .frame(minWidth: 208, minHeight: 39, alignment: .leading)
-            .background(isPressed ? Color.blue50 : Color.blue500)
-            .cornerRadius(20)
+                    .lineLimit(1)
+            }.foregroundStyle(isPressed ? Color.blue500 : Color.white500)
+                .frame(maxWidth: .infinity, alignment: .leading)
             .animation(.easeInOut(duration: 0.2), value: isPressed)
-        }.shadow(color: .black.opacity(0.25), radius: 4, y: 4)
+        }.padding(.horizontal)
+            .padding(.vertical, 10)
+            .background(isPressed ? Color.blue50 : Color.blue500)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .shadow(color: .black.opacity(0.25), radius: 4, y: 4)
     }
 }
 
 #Preview {
-    SideButtonComponent(style: SideButtonStyle.alerts)
+    SideButtonComponent(style: .alert)
 }

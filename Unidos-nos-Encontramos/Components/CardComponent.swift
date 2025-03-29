@@ -11,7 +11,24 @@ struct CardComponent: View {
     
     var body: some View {
         
-        Text("h")
+        HStack(alignment: .center) {
+            
+            VStack(alignment: .leading) {
+                Text("Eduardo Solorzano Santos")
+                Text("9622696188")
+            }
+            
+            Spacer()
+            
+            VStack {
+                Text("amigo")
+                
+                Image(systemName: "star.fill")
+                    .foregroundStyle(.grey100)
+            }
+        }.padding()
+            .background(.blue500)
+            .foregroundStyle(.white50)
     }
 }
 
