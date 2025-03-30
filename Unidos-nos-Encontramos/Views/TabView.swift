@@ -17,7 +17,7 @@ struct TabView: View {
             
             ZStack {
                 selectedTab.view
-                    .frame(maxWidth: .infinity ,maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }.safeAreaInset(edge: .bottom) {
                 LazyVGrid(columns: gridColumns) {
                     

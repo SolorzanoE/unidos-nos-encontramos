@@ -12,6 +12,7 @@ struct LoginView: View {
     @State var email = ""
     @State var password = ""
     @State private var showPassword = false
+    @AppStorage("isLogged") var isLogged = false
     
     var body: some View {
         
@@ -31,8 +32,9 @@ struct LoginView: View {
                         .foregroundStyle(.blue400)
                 }.padding(.vertical, 10)
                 
-                JourneyButtonComponent(text: "Iniciar Sesión")
-                    .padding(.top, 10)
+                JourneyButtonComponent(text: "Iniciar Sesión") {
+                    isLogged = true
+                }.padding(.top, 10)
                 
                 DividerComponent()
                 
