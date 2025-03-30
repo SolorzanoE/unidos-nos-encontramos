@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BDF257DA2D97E02E005A6359 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BDF257D92D97E02E005A6359 /* FirebaseAnalytics */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		BDAC45A72D8FE4720003B495 /* Unidos-nos-Encontramos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unidos-nos-Encontramos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDF257DA2D97E02E005A6359 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = "Unidos-nos-Encontramos";
 			packageProductDependencies = (
+				BDF257D92D97E02E005A6359 /* FirebaseAnalytics */,
 			);
 			productName = "Unidos-nos-Encontramos";
 			productReference = BDAC45A72D8FE4720003B495 /* Unidos-nos-Encontramos.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = BDAC459E2D8FE4720003B495;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BDF257D82D97E02E005A6359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BDAC45A82D8FE4720003B495 /* Products */;
 			projectDirPath = "";
@@ -341,6 +350,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BDF257D82D97E02E005A6359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BDF257D92D97E02E005A6359 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDF257D82D97E02E005A6359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BDAC459F2D8FE4720003B495 /* Project object */;
 }

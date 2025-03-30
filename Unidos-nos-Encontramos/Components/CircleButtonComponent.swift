@@ -9,9 +9,9 @@ import SwiftUI
 
 struct CircleButtonComponent: View {
     
-    var action: () -> Void = {}
     var style: StyleButton
     var systemImage: String
+    var action: () -> Void = {}
     
     var body: some View {
         

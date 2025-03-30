@@ -11,11 +11,12 @@ struct CircleBadgeButtonComponent: View {
     
     var systemImage: String
     var numberBadge: Int?
+    var action: () -> Void = {}
     
     var body: some View {
         
         ZStack {
-            CircleButtonComponent(style: .lightblue, systemImage: systemImage)
+            CircleButtonComponent(style: .lightblue, systemImage: systemImage, action: action)
             
             if let numberBadge = numberBadge, numberBadge > 0 {
                 TextComponent(text: "\(numberBadge)", style: .body)
