@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State private var isLogged = true
+    @AppStorage("isLogged") private var isLogged = false
     @State private var sideIsPresent = false
     @State private var sideElement: SideElement = .home
     
@@ -27,7 +27,7 @@ struct MainView: View {
             } else {
                 LoginView()
             }
-                        
+            
             if sideIsPresent && isLogged {
                 SidebarView(isPresent: $sideIsPresent, element: $sideElement)
             }

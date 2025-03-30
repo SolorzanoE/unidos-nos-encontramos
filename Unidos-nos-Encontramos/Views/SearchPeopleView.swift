@@ -21,17 +21,24 @@ struct SearchPeopleView: View {
         GridItem(.flexible(), spacing: 16)
     ]
     
+    @State private var text: String = ""
+    
     var body: some View {
         
         ZStack {
             
+            BackgroundComponent(style: .white)
+            
             VStack(alignment: .leading){
-                SearchComponent(text:"Búsqueda inteligente", placeholder: "")
-                    .foregroundStyle(.grey900)
-                    .padding(.bottom,15)
+                
+                SearchComponent(text: $text, placeholder: "Búsqueda inteligente...")
+                    .padding(.bottom, 15)
+                
                 TextComponent(text: "Personas reportadas desaparecidas", style: .subheadline)
+                    .foregroundStyle(.grey500)
                     .fontWeight(.semibold)
-                    .padding(.bottom,4)
+                    .padding(.bottom, 4)
+                
                 Button(action: {
                 }) {
                     TextComponent(text: "Tapachula - Chiapas", style: .body)
@@ -52,13 +59,9 @@ struct SearchPeopleView: View {
                     }
                 }
                 
-                
             }.padding(.horizontal)
             
         }
-        .background(Color.white500)
-        .safeAreaInset(edge: .bottom, content: {
-        })
     }
 }
 

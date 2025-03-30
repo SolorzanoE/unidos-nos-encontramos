@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContactView: View {
     
+    @State private var openNewContact: Bool = false
+    @State private var openTray: Bool = false
+    
     var body: some View {
         
         ZStack {
@@ -43,14 +46,24 @@ struct ContactView: View {
                 .scrollIndicators(.hidden)
             
             VStack {
-                CircleBadgeButtonComponent(systemImage: "tray.fill", numberBadge: 5)
+                CircleBadgeButtonComponent(systemImage: "tray.fill", numberBadge: 5) {
+                    openTray.toggle()
+                }
                 
                 CircleButtonComponent(style: .blue, systemImage: "plus") {
-                    
+                    openNewContact.toggle()
                 }
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 .padding(.bottom)
         }.padding(.horizontal)
+            .background(BackgroundComponent(style: .white))
+            .fullScreenCover(isPresented: $openNewContact) {
+                SendRequestContactView(isPresent: $openNewContact)
+                    .transition(.move(edge: .leading))
+            }
+            .fullScreenCover(isPresented: $openTray) {
+                
+            }
     }
 }
 
@@ -63,6 +76,7 @@ private struct SectionContact: View {
         
         VStack(alignment: .leading, spacing: 5) {
             TextComponent(text: name, style: .headline)
+                .foregroundStyle(.grey500)
                 .fontWeight(.semibold)
             
             VStack(spacing: 19) {
@@ -81,6 +95,7 @@ private struct SectionContact: View {
                                 
                                 TextComponent(text: data.cellphone, style: .body)
                             }.fontWeight(.medium)
+                                .foregroundStyle(.white500)
                                 .lineLimit(1)
                             
                             Spacer()

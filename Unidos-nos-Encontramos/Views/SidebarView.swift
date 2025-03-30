@@ -11,6 +11,7 @@ struct SidebarView: View {
     
     @Binding var isPresent: Bool
     @Binding var element: SideElement
+    @AppStorage("isLogged") private var isLogged = false
     
     var body: some View {
         
@@ -55,7 +56,11 @@ struct SidebarView: View {
                     DividerComponent()
                         .foregroundStyle(.skyBlue200)
                     
-                    SideButtonComponent(style: .close)
+                    SideButtonComponent(style: .close) {
+                        isLogged = false
+                        isPresent = false
+                        element = .home
+                    }
                 }.padding(.horizontal)
                     .background(BackgroundComponent(style: .gradientOceanBlue))
                     .frame(width: 240)

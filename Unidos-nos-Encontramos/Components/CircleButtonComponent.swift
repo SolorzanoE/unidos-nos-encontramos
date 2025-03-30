@@ -22,10 +22,10 @@ struct CircleButtonComponent: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25)
+                .padding()
                 .foregroundStyle(.white500)
                 .fontWeight(.bold)
-        }.padding(13)
-            .background(colorButton)
+        }.background(colorButton)
             .clipShape(Circle())
     }
     

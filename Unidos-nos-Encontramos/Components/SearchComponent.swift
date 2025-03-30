@@ -9,13 +9,16 @@ import SwiftUI
 
 struct SearchComponent: View {
     
-    @State var text: String
+    @Binding var text: String
     let placeholder: String
     
     var body: some View {
         
         HStack {
             Image(systemName: "magnifyingglass")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 22)
                 .foregroundStyle(.grey500)
             
             TextField(
@@ -24,14 +27,14 @@ struct SearchComponent: View {
                 prompt: Text(placeholder)
                     .foregroundStyle(.grey400)
             ).foregroundStyle(.grey500)
-                .font(.custom("Montserrat", size: 16))
+                .font(.custom("Montserrat", size: 18))
         }.padding(8)
-            .background()
+            .background(.white400)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(color: .black.opacity(0.25), radius: 7)
     }
 }
 
 #Preview {
-    SearchComponent(text: "a", placeholder: "Buscar...")
+    SearchComponent(text: .constant("hola"), placeholder: "Buscar...")
 }

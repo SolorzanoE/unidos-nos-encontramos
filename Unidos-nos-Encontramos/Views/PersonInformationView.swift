@@ -11,6 +11,7 @@ struct PersonInformationView: View {
     
     let fullName: String
     var image: ImageResource?
+    @Binding var isPresent: Bool
     
     var body: some View {
         
@@ -86,7 +87,7 @@ struct PersonInformationView: View {
             }.frame(maxWidth: .infinity)
                 .safeAreaInset(edge: .top, alignment: .leading) {
                     NavigationButtonComponent(style: .back) {
-                        // Action
+                        isPresent = false
                     }
                 }.padding(.horizontal)
         }
@@ -124,5 +125,5 @@ struct PersonInformationView: View {
 }
 
 #Preview {
-    PersonInformationView(fullName: "Martin Emmanuel Erants Solórzano")
+    PersonInformationView(fullName: "Martin Emmanuel Erants Solórzano", isPresent: .constant(false))
 }
