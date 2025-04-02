@@ -58,5 +58,7 @@ struct TemplateCardComponent<Content: View>: View {
 }
 
 #Preview {
-    TemplateCardComponent(color: .red, content: {})
+    TemplateCardComponent(color: .red) {
+        TextComponent(text: "Eduardo", style: .body)
+    }
 }
