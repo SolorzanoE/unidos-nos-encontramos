@@ -11,7 +11,6 @@ struct DividerComponent: View {
     var body: some View {
         Rectangle()
             .frame(height: 1)
-            .padding(.vertical)
     }
 }
 

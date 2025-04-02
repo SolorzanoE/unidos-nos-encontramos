@@ -12,7 +12,6 @@ enum IconStyle {
     
     var icon: String {
         switch self {
-            
         case .person:
             return "person.fill"
         case .mail:
@@ -32,15 +31,16 @@ enum IconStyle {
 }
 
 struct IconComponent: View {
-    var changeColor: Bool = false
+    var changeColor: Bool = true
     let style: IconStyle
     
     var body: some View {
         Image(systemName: style.icon)
             .frame(minWidth: 45, minHeight: 45)
-            .foregroundStyle(changeColor ? Color.blue500 : Color.blue50)
+            .foregroundStyle(changeColor ? Color.blue300 : Color.blue50)
             .background(changeColor ? Color.blue50 : Color.blue500)
             .clipShape(Circle())
+            .shadow(radius: 4, y: 4)
             .animation(.easeInOut(duration: 0.2), value: changeColor)
     }
 }

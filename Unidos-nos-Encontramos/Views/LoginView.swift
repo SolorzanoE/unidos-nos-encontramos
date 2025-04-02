@@ -37,6 +37,7 @@ struct LoginView: View {
                 }.padding(.top, 10)
                 
                 DividerComponent()
+                    .padding(.vertical)
                 
                 VStack(spacing: 20) {
                     LogExternButtonComponent(style: .google)
@@ -47,6 +48,7 @@ struct LoginView: View {
                 }.padding(.horizontal)
                 
                 DividerComponent()
+                    .padding(.vertical)
                 
                 footer()
             }.padding(.horizontal)

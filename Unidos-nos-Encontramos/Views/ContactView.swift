@@ -62,7 +62,7 @@ struct ContactView: View {
                     .transition(.move(edge: .leading))
             }
             .fullScreenCover(isPresented: $openTray) {
-                
+                RequestContactView(isPresented: $openTray)
             }
     }
 }
