@@ -40,7 +40,7 @@ struct LoginView: View {
                     Task {
                         do {
                             let isLoggedResult = await loginViewModel.login(
-                                login: Login(user: email, password: password)
+                                credentials: Login(user: email, password: password)
                             )
                             self.isLogged = isLoggedResult
                         }

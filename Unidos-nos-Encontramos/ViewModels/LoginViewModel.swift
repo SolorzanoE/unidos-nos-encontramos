@@ -10,24 +10,24 @@ import SwiftUI
 
 class LoginViewModel: ObservableObject {
     @Published var user: UserResponse?
-    @Published var login: Login = Login(user: "", password: "")
+    @Published var credentials: Login = Login(user: "", password: "")
     
-    func login(login: Login) async -> Bool {
+    func login(credentials: Login) async -> Bool {
         
         do {
-            let data = try await ApiService.consume(body: login, method: .post, endpoint: "http://localhost:8085/api/users/login")
+            let data = try await ApiService.consume(
+                body: credentials,
+                method: .post,
+                endpoint: "http://localhost:8085/api/users/login"
+            )
             
-            let decoder = JSONDecoder()
+            let userData = try JSONDecoder().decode(UserResponse.self, from: data)
             
-            let userData = try decoder.decode(UserResponse.self, from: data)
-            
-            user = userData
-            
+            await MainActor.run { user = userData }
             return true
         } catch {
-            print(error.localizedDescription)
+            print("Error: \(error.localizedDescription)")
+            return false
         }
-        
-        return false
     }
 }

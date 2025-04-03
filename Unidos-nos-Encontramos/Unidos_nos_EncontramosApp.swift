@@ -8,11 +8,34 @@
 import SwiftUI
 import FirebaseCore
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    let notificationService = NotificationService()
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
+        UNUserNotificationCenter.current().delegate = self
         return true
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        NotificationCenter.default.post(
+            name: Notification.Name("NotificationTapped"),
+            object: nil,
+            userInfo: userInfo
+        )
+        
+        completionHandler()
     }
 }
 
@@ -20,11 +43,26 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct Unidos_nos_EncontramosApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var loginViewModel = LoginViewModel()
-    
+
+    @Environment(\.scenePhase) var scenePhase
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environmentObject(loginViewModel)
+                .environmentObject(delegate.notificationService)
+                .onChange(of: scenePhase) { newPhase in
+                    switch newPhase {
+                    case .active:
+                        if let userId = loginViewModel.user?.id {
+                            delegate.notificationService.startPolling(for: userId)
+                        }
+                    case .background:
+                        delegate.notificationService.stopPolling()
+                    case .inactive:
+                        break
+                    @unknown default:
+                        break
+                    }
+                }
         }
     }
 }

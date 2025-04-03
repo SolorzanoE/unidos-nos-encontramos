@@ -10,35 +10,29 @@ import Foundation
 class ApiService {
     
     private init() {}
-        
+    
     static func consume<T: Codable>(body: T?, method: HTTPMethod, endpoint: String) async throws -> Data {
         guard let endpoint = URL(string: endpoint) else {
             throw URLError(.badURL)
         }
-                
+        
         var urlRequest = URLRequest(url: endpoint)
         
         urlRequest.httpMethod = method.rawValue
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if method != .get, method != .delete {
-            let encode = JSONEncoder()
-
-            do {
-                urlRequest.httpBody = try encode.encode(body)
-            } catch {
-                print("No se pudo castear a JSON")
-            }
+        if method != .get && method != .delete, let body = body {
+            urlRequest.httpBody = try JSONEncoder().encode(body)
         }
         
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
-        if let httpResponse = response as? HTTPURLResponse {
-            let statusCode = httpResponse.statusCode
-            
-            if statusCode != 200 || statusCode != 204 {
-                throw URLError(URLError.Code.unknown)
-            }
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.cannotParseResponse)
+        }
+        
+        if httpResponse.statusCode != 200 && httpResponse.statusCode != 204 {
+            throw URLError(.badServerResponse)
         }
         
         return data
