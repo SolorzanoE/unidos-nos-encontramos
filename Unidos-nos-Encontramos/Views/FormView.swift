@@ -65,7 +65,13 @@ struct FormView: View {
             }.safeAreaInset(edge: .bottom) {
                 bottomButtons
             }.safeAreaInset(edge: .top) {
-                NavigationButtonComponent(style: .exit)
+                Button(action: {
+                        
+                    }) {
+                        NavigationButtonComponent(style: .exit) {
+                            isPresent = false 
+                        }
+                    }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing)
             }
