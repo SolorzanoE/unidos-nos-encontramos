@@ -8,8 +8,10 @@
 import Foundation
 
 class ApiService {
+    
+    private init() {}
         
-    func consume<T: Codable>(body: T?, method: HTTPMethod, endpoint: String) async throws -> Data {
+    static func consume<T: Codable>(body: T?, method: HTTPMethod, endpoint: String) async throws -> Data {
         guard let endpoint = URL(string: endpoint) else {
             throw URLError(.badURL)
         }
@@ -31,7 +33,13 @@ class ApiService {
         
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
-        
+        if let httpResponse = response as? HTTPURLResponse {
+            let statusCode = httpResponse.statusCode
+            
+            if statusCode != 200 {
+                throw URLError(URLError.Code.unknown)
+            }
+        }
         
         return data
     }
