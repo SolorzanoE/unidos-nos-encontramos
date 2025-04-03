@@ -44,9 +44,7 @@ struct LoginView: View {
                             )
                             self.isLogged = isLoggedResult
                         }
-                            
-                            
-                        }
+                    }
                 }.padding(.top, 10)
                 
                 DividerComponent()

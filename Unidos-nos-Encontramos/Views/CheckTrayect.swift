@@ -10,20 +10,19 @@ import CoreLocation
 
 struct CheckTrayect: View {
     
-    @State private var currentLocate: CLLocationCoordinate2D = .init(latitude: 0, longitude: 0)
-    @State private var destination: CLLocationCoordinate2D = .init(latitude: 0, longitude: 0)
-    
-    @State private var currentUbication: String = ""
     @State private var finalUbication: String = ""
     @State private var contacts: String = ""
     @State private var time: String = ""
     @State private var photo: String = ""
+    @StateObject private var homeViewModel = HomeViewModel()
+    @EnvironmentObject private var loginVM: LoginViewModel
     
     var body: some View {
         
         VStack(spacing: 17) {
             
-            FieldComponent(type: .textField, name: "Tu ubicación actual", placeholder: "Tu ubicación", text: $currentUbication, isRequired: true)
+            FieldComponent(type: .textField, name: "Tu ubicación actual", placeholder: "Tu ubicación", text: .constant(homeViewModel.userAddress), isRequired: true)
+                .disabled(true)
             
             FieldComponent(type: .textField, name: "Tu lugar de destino", placeholder: "Seleccione su lugar de destino", text: $finalUbication, isRequired: true)
                 .disabled(true)
@@ -32,12 +31,27 @@ struct CheckTrayect: View {
             
             FieldComponent(type: .textField, name: "Establecer intervalo de tiempo", placeholder: "Selecciona el tiempo", text: $time, isRequired: true)
             
-            FieldComponent(type: .textField, name: "Fotos (Opcional)", placeholder: "Añadir fotografias antes del trayecto", text: $photo, isRequired: true)
+            FieldComponent(type: .textField, name: "Fotos (Opcional)", placeholder: "Añadir fotografias antes del trayecto", text: $photo)
             
             Spacer()
             
-            JourneyButtonComponent(text: "Confirmar Trayecto")
-                
+            JourneyButtonComponent(text: "Confirmar Trayecto") {
+                Task {
+                   try await homeViewModel.createRoute(
+                        userId: loginVM.user!.id,
+                        route: Route(
+                            startLat: 0, startLng: 0, endLat: 10,
+                            estimatedArrivalTime: nil,
+                            suspiciousThreshold: 15,
+                            arrivalRadiusMeters: 10,
+                            contacts: [
+                                .init(userId: .init(), notificationInterval: 10)
+                            ]
+                        )
+                    )
+                }
+            }
+            
         }.padding(.horizontal)
             .padding(.top, 30)
             .background(BackgroundComponent(style: .white))
@@ -46,4 +60,5 @@ struct CheckTrayect: View {
 
 #Preview {
     CheckTrayect()
+        .environmentObject(LoginViewModel())
 }
