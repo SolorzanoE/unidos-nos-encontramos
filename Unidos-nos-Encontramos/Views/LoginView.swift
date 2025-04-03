@@ -15,6 +15,8 @@ struct LoginView: View {
     @State private var isCreateNewAccount = false
     @AppStorage("isLogged") var isLogged = false
     
+    @StateObject private var loginViewModel = LoginViewModel()
+    
     var body: some View {
         
         ZStack(alignment: .bottom) {

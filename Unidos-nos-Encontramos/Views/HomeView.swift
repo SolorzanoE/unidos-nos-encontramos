@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct HomeView: View {
+    
     @State private var position: MapCameraPosition = .region(
         MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 19.4326, longitude: -99.1332), // CDMX
@@ -16,13 +17,14 @@ struct HomeView: View {
         )
     )
     
+    @StateObject private var homeViewModel = HomeViewModel()
+    
     @State private var isPresented: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
             
             Map(position: $position) {
-                
                 
             }.mapStyle(.standard(pointsOfInterest: .excludingAll))
             
