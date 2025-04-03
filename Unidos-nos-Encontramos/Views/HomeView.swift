@@ -16,6 +16,8 @@ struct HomeView: View {
         )
     )
     
+    @State private var isPresented: Bool = false
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             
@@ -24,7 +26,29 @@ struct HomeView: View {
                 
             }.mapStyle(.standard(pointsOfInterest: .excludingAll))
             
-            
+            HStack {
+                JourneyButtonComponent(text: "Iniciar Trayecto") {
+                    isPresented.toggle()
+                }
+                
+                Button {
+                    
+                } label: {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.white500)
+                        .frame(maxWidth: 35)
+                }.frame(maxWidth: 45, maxHeight: 45)
+                    .padding()
+                    .background(.yellow600)
+                    .clipShape(Circle())
+            }.padding(.horizontal)
+        }.sheet(isPresented: $isPresented) {
+            CheckTrayect()
+                .presentationDetents([.fraction(0.8)])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(25)
         }
     }
 }
