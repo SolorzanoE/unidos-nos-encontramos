@@ -59,7 +59,7 @@ struct AlertView: View {
                 .padding(.bottom)
         }
         .fullScreenCover(isPresented: $openNewContact) {
-            SendRequestContactView(isPresent: $openNewContact)
+            AddAlertView()
                 .transition(.move(edge: .leading))
         }
     }
