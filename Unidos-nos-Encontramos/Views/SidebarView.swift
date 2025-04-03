@@ -75,16 +75,20 @@ struct SidebarView: View {
 enum SideElement: CaseIterable {
     case home
     case alert
+    case earlyWarning
     case configuration
-    
+        
     func button(isSelected: Bool, action: @escaping () -> Void) -> some View {
         switch self {
         case .home:
             SideButtonComponent(isPressed: isSelected, style: .home, action: action)
         case .alert:
             SideButtonComponent(isPressed: isSelected, style: .alert, action: action)
+        case .earlyWarning:
+            SideButtonComponent(isPressed: isSelected, style: .earlyWarning, action: action)
         case .configuration:
             SideButtonComponent(isPressed: isSelected, style: .configuration, action: action)
+        
         }
     }
 }

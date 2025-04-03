@@ -9,7 +9,7 @@ import SwiftUI
 
 // Esto es excederse con el enum, pero va
 enum SideButtonStyle {
-    case home, alert, configuration, close
+    case home, alert, earlyWarning , configuration, close
     
     var icon: String {
         switch self {
@@ -18,6 +18,8 @@ enum SideButtonStyle {
             return "house.fill"
         case .alert:
             return "exclamationmark.triangle.fill"
+        case .earlyWarning:
+            return "person.badge.shield.exclamationmark.fill"
         case .configuration:
             return "gearshape.fill"
         case .close:
@@ -32,6 +34,8 @@ enum SideButtonStyle {
             return "Inicio"
         case .alert:
             return "Alertas"
+        case .earlyWarning:
+            return "Alerta inmediata"
         case .configuration:
             return "Configuración"
         case .close:

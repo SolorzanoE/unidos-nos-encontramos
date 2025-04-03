@@ -38,6 +38,7 @@ struct AccountForm: View {
                 FieldComponent(type: .secureField(.hidden), name: "Contraseña", placeholder: "Ingrese una contraseña", text: .constant(""), isRequired: true, fontSize: .body)
                 
                 FieldComponent(type: .secureField(.hidden), name: "Ingrese nuevamente su contraseña", placeholder: "Ingrese nuevamente su contraseña", text: .constant(""), isRequired: true, fontSize: .body)
+               
             }
         }
     }

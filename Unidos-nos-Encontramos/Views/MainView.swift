@@ -49,9 +49,11 @@ private struct Sidebar: View {
         case .home:
             TabView()
         case .alert:
-            Text("a")
+            AlertView()
         case .configuration:
             Text("a")
+        case .earlyWarning:
+            EarlyWarningView()
         }
     }
 

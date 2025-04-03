@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum IconStyle {
-    case person, mail, heart, key, file, alert, map
+    case person, mail, heart, key, file, alert, alert2, map
     
     var icon: String {
         switch self {
@@ -24,6 +24,8 @@ enum IconStyle {
             return "text.document.fill"
         case .alert:
             return "exclamationmark.triangle.fill"
+        case .alert2:
+            return "person.badge.shield.exclamationmark.fill"
         case .map:
             return "map.fill"
         }
