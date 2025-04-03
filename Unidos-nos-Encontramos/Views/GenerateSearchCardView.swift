@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct GenerateSearchCardView: View {
+    @State private var openForm: Bool = false
     
     var body: some View {
-        
         ZStack {
-            
             BackgroundComponent(style: .white)
             
             VStack(spacing: 15) {
@@ -35,40 +34,44 @@ struct GenerateSearchCardView: View {
                 ScrollView {
                     SearchCard(data: [
                         .init(name: "Eduardo Solórzano", relationShip: "Amigo")
-                    ])
-                }.clipped()
-                    .scrollIndicators(.hidden)
-            }.padding(.horizontal)
-                .padding(.top, 30)
+                    ], openForm: $openForm)
+                }
+                .clipped()
+                .scrollIndicators(.hidden)
+            }
+            .padding(.horizontal)
+            .padding(.top, 30)
+        }
+        .fullScreenCover(isPresented: $openForm) {
+            FormView(isPresent: $openForm)
         }
     }
 }
 
 private struct SearchCard: View {
-    
     let data: [Data]
+    @Binding var openForm: Bool
     
     var body: some View {
-        
         VStack(spacing: 19) {
-            
-            ForEach(data) { data in
-                
-                TemplateCardComponent(color: .blue) {
-                    
-                    HStack(spacing: 5) {
-                        
-                        TextComponent(text: data.name, style: .subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white500)
-                            .lineLimit(1)
-                        
-                        Spacer()
-                        
-                        TagComponent(text: data.relationShip, color: .blue600)
-                        
+            ForEach(data) { item in
+                Button(action: {
+                    openForm = true // Abre el formulario cuando se presiona la card
+                }) {
+                    TemplateCardComponent(color: .blue) {
+                        HStack(spacing: 5) {
+                            TextComponent(text: item.name, style: .subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white500)
+                                .lineLimit(1)
+                            
+                            Spacer()
+                            
+                            TagComponent(text: item.relationShip, color: .blue600)
+                        }
                     }
                 }
+                .buttonStyle(PlainButtonStyle()) // Elimina el efecto de botón predeterminado
             }
         }
     }
