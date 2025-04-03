@@ -9,13 +9,13 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State private var email = ""
-    @State private var password = ""
+    @State private var email = "usuario@ejemplo.com"
+    @State private var password = "Contraseña123!"
     @State private var showPassword = false
     @State private var isCreateNewAccount = false
     @AppStorage("isLogged") var isLogged = false
     
-    @StateObject private var loginViewModel = LoginViewModel()
+    @EnvironmentObject private var loginViewModel: LoginViewModel
     
     var body: some View {
         
@@ -29,6 +29,7 @@ struct LoginView: View {
                 VStack(alignment: .trailing, spacing: 10) {
                     
                     FieldComponent(type: .secureField(.show), name: "Contraseña", placeholder: "Ingresa tu contraseña", text: $password, fontSize: .body)
+                        .keyboardType(.emailAddress)
                     
                     TextComponent(text: "Olvidé mi contraseña", style: .callout)
                         .fontWeight(.medium)
@@ -36,7 +37,16 @@ struct LoginView: View {
                 }.padding(.vertical, 10)
                 
                 JourneyButtonComponent(text: "Iniciar Sesión") {
-                    isLogged = true
+                    Task {
+                        do {
+                            let isLoggedResult = await loginViewModel.login(
+                                login: Login(user: email, password: password)
+                            )
+                            self.isLogged = isLoggedResult
+                        }
+                            
+                            
+                        }
                 }.padding(.top, 10)
                 
                 DividerComponent()
@@ -80,4 +90,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
+        .environmentObject(LoginViewModel())
 }
