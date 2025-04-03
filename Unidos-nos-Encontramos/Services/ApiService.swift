@@ -36,7 +36,7 @@ class ApiService {
         if let httpResponse = response as? HTTPURLResponse {
             let statusCode = httpResponse.statusCode
             
-            if statusCode != 200 {
+            if statusCode != 200 || statusCode != 204 {
                 throw URLError(URLError.Code.unknown)
             }
         }
@@ -52,3 +52,5 @@ class ApiService {
         case patch = "PATCH"
     }
 }
+
+let baseURL = "http://localhost:8085/api"
