@@ -11,58 +11,71 @@ import SwiftUI
 struct EarlyWarningView: View {
     @State private var isOn = false
     @State private var openNewContact: Bool = false
+    
     var body: some View {
-        ZStack(alignment: .top){
-            VStack(spacing: 5){
+        ZStack(alignment: .top) {
+            VStack(spacing: 5) {
                 TextComponent(text: "Alerta inmediata", style: .title3)
                     .fontWeight(.semibold)
                     .foregroundStyle(.grey500)
+                
                 DividerComponent()
                     .padding(.horizontal)
-                Toggle(isOn: $isOn) {
-                    HStack(spacing: 13){
-                        VStack(alignment: .leading ,spacing: 12){
-                            HStack(alignment: .center, spacing: 13){
-                                TextComponent(text: "10:30 AM", style: .headline)
-                                    .fontWeight(.semibold)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 3)
-                                    .background(Color.yellow200)
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                                    .shadow(radius: 4, y: 4)
-                                TextComponent(text: "Alerta mañanera", style: .body)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.grey700)
-                            }
-                            
-                            TextComponent(text: "L, M | Emmanuel Solórzano, Alberto palo...", style: .callout)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.grey700)
-                        }
-                        
-                        
-                    }
-                    
+                
+                ScrollView {
+                    EarlyWarningCard(data: [
+                        .init(name: "Lucía Torres", relationShip: "Familiar"),
+                        .init(name: "Carlos Ruiz", relationShip: "Vecino")
+                    ])
                 }
-                .toggleStyle(.switch)
-                .padding(10)
-                .background(.yellow400)
-                .clipShape(RoundedRectangle(cornerRadius: 5))
-                .shadow(radius: 4, y: 4)
-                .padding()
+                .clipped()
+                .scrollIndicators(.hidden)
+                .padding(.top)
             }
-            VStack{
-                CircleButtonComponent(style: .blue, systemImage: "plus") {
+            
+            VStack {
+                CircleButtonComponent(style: .red, systemImage: "exclamationmark") {
                     openNewContact.toggle()
-                    
-                }.padding(.horizontal)
-            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .padding(.bottom)
+                }
+                .padding(.horizontal)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+            .padding(.bottom)
         }
+        .background(BackgroundComponent(style: .white))
         .fullScreenCover(isPresented: $openNewContact) {
-            SendRequestContactView(isPresent: $openNewContact)
+            FormView(isPresent: $openNewContact)
                 .transition(.move(edge: .leading))
         }
+    }
+}
+
+private struct EarlyWarningCard: View {
+    let data: [Data]
+    
+    var body: some View {
+        VStack(spacing: 19) {
+            ForEach(data) { person in
+                TemplateCardComponent(color: .red) {
+                    HStack(spacing: 5) {
+                        TextComponent(text: person.name, style: .subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white500)
+                            .lineLimit(1)
+                        
+                        Spacer()
+                        
+                        TagComponent(text: person.relationShip, color: .red800)
+                    }
+                }
+            }
+        }
+    }
+    
+    struct Data: Identifiable {
+        let id = UUID()
+        let name: String
+        let relationShip: String
     }
 }
 
