@@ -13,8 +13,8 @@ struct NotificationResponse: Codable, Identifiable {
     let message: String
     let relatedReportId: UUID?
     let relatedRouteId: UUID?
-    let isRead: Bool
-    let createdAt: Date
+    let createdAt: Date?
+    let read: Bool
     
     enum NotificationType: String, Codable {
         case ROUTE_INFO
@@ -25,6 +25,6 @@ struct NotificationResponse: Codable, Identifiable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, type, message, relatedReportId, relatedRouteId, isRead, createdAt
+        case id, type, message, relatedReportId, relatedRouteId, createdAt, read
     }
 }

@@ -43,11 +43,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 struct Unidos_nos_EncontramosApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var loginViewModel = LoginViewModel()
-
+    
     @Environment(\.scenePhase) var scenePhase
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(loginViewModel)
                 .environmentObject(delegate.notificationService)
                 .onChange(of: scenePhase) { newPhase in
                     switch newPhase {
@@ -61,6 +62,15 @@ struct Unidos_nos_EncontramosApp: App {
                         break
                     @unknown default:
                         break
+                    }
+                }
+                .onChange(of: loginViewModel.user) { newUser in
+                    if let userId = newUser?.id {
+                        print("User logged in with ID: \(userId), starting notifications")
+                        delegate.notificationService.startPolling(for: userId)
+                    } else {
+                        print("User logged out, stopping notifications")
+                        delegate.notificationService.stopPolling()
                     }
                 }
         }

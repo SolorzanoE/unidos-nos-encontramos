@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct UserResponse: Codable {
+struct UserResponse: Codable, Equatable {
     let id: UUID
     let username: String
     let email: String

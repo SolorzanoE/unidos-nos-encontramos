@@ -5,7 +5,7 @@
 //  Created by Eduardo Solórzano Santos on 03/04/25.
 //
 
-struct Catalog: Codable {
+struct Catalog: Codable, Equatable {
     let id: Int
     let name: String
 }

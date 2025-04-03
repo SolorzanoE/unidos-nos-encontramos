@@ -13,11 +13,11 @@ import Combine
 class NotificationService: ObservableObject {
     @Published var unreadCount: Int = 0
     @Published var recentNotifications: [NotificationResponse] = []
+    private var userId: UUID?
     
     private var timer: Timer?
     private var lastFetchTimestamp: Date
     private let pollingInterval: TimeInterval = 10.0
-    private var userId: UUID?
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -91,23 +91,29 @@ class NotificationService: ObservableObject {
         guard let userId = userId else { return }
         
         // Formatear fecha para la API
-        let dateFormatter = ISO8601DateFormatter()
-        dateFormatter.formatOptions = [.withInternetDateTime]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let formattedDate = dateFormatter.string(from: lastFetchTimestamp)
         
         Task {
             do {
                 let endpoint = "\(baseURL)/notifications/new/\(userId)?since=\(formattedDate)"
-                
                 let data = try await ApiService.consume(
                     body: nil as String?,
                     method: .get,
                     endpoint: endpoint
                 )
                 
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("Raw notification response: \(responseString)")
+                }
+                
                 // Decodificar respuesta
                 let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                
                 let notifications = try decoder.decode([NotificationResponse].self, from: data)
                 
                 // Actualizar en el hilo principal
