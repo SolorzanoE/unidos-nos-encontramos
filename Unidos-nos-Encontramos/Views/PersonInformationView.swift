@@ -71,6 +71,29 @@ struct PersonInformationView: View {
                             body("Fecha de los hechos", description: "2 de febrero de 2025")
                             
                             body("Lugar de los hechos", description: "Tapachula, Chiapas")
+                        }
+                        boxInformation(color: .blue50) {
+                            title("Contactos")
+                            HStack{
+                                body("Personal", description: "")
+                                Spacer()
+                                TagComponent(text: "Contactar", color: .blue400)
+                                    
+                            }
+                            HStack{
+                                body("Contacto de emergencia", description: "")
+                                Spacer()
+                                TagComponent(text: "Contactar", color: .blue400)
+                                    
+                            }
+                            HStack{
+                                body("911", description: "")
+                                Spacer()
+                                TagComponent(text: "Contactar", color: .blue400)
+                                    
+                            }
+                        }
+                        boxInformation(color: .blue50) {
                             
                             title("Datos")
                             
@@ -79,9 +102,8 @@ struct PersonInformationView: View {
                             body("Señas particulares", description: "Lunar")
                             
                             body("Prendas de vestir", description: "Sudadera con logo de la UNACH")
-                            
-                            title("Contactos")
                         }
+                        
                     }
                 }.scrollIndicators(.hidden)
             }.frame(maxWidth: .infinity)
@@ -120,7 +142,7 @@ struct PersonInformationView: View {
                 color.opacity(0.10)
             }
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            //.shadow(radius: 1)
+        //.shadow(radius: 1)
     }
 }
 
