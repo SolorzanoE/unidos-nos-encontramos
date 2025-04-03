@@ -9,9 +9,10 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State var email = ""
-    @State var password = ""
+    @State private var email = ""
+    @State private var password = ""
     @State private var showPassword = false
+    @State private var isCreateNewAccount = false
     @AppStorage("isLogged") var isLogged = false
     
     var body: some View {
@@ -58,6 +59,9 @@ struct LoginView: View {
                 .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20))
                 .shadow(color: .black.opacity(0.5), radius: 10)
         }.ignoresSafeArea(edges: .bottom)
+            .fullScreenCover(isPresented: $isCreateNewAccount) {
+                SignUpView(isPresent: $isCreateNewAccount)
+            }
     }
     
     func footer() -> some View {
@@ -65,7 +69,7 @@ struct LoginView: View {
             Text("¿No tienes una cuenta?")
             
             Button("Crear una cuenta nueva") {
-                
+                isCreateNewAccount.toggle()
             }.foregroundStyle(.blue400)
         }.font(.custom("Montserrat", size: 13))
             .foregroundStyle(.grey500)
