@@ -40,8 +40,9 @@ struct SidebarView: View {
                     }.foregroundStyle(.white50)
                     
                     DividerComponent()
+                        .padding(.vertical)
                         .foregroundStyle(.skyBlue200)
-                    
+                        
                     VStack(spacing: 25) {
                         ForEach(SideElement.allCases, id: \.self) { sideButton in
                             sideButton.button(isSelected: element == sideButton ? true : false) {
@@ -54,6 +55,7 @@ struct SidebarView: View {
                     Spacer()
                     
                     DividerComponent()
+                        .padding(.vertical)
                         .foregroundStyle(.skyBlue200)
                     
                     SideButtonComponent(style: .close) {

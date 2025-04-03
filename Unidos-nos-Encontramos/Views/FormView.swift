@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Cambiarle el nombre
 struct FormView: View {
     
     // Lista de pasos del formulario
@@ -16,16 +17,18 @@ struct FormView: View {
         FormStep(icon: .alert, title: "Acerca de los hechos"),
         FormStep(icon: .map, title: "Lugar de los hechos"),
     ]
-    @State private var navigateToMain = false
+    
+    @Binding var isPresent: Bool
     @State private var activeIcons: [Bool]
     @State private var currentIndex: Int = 1
-
-    init() {
+    
+    init(isPresent: Binding<Bool>) {
         var initialState = Array(repeating: true, count: steps.count)
         initialState[0] = false
         _activeIcons = State(initialValue: initialState)
+        _isPresent = isPresent
     }
-
+    
     var body: some View {
         let titleForm = steps[currentIndex - 1].title
         NavigationStack {
@@ -49,26 +52,14 @@ struct FormView: View {
                         .fontWeight(.medium)
                         .padding(.top, 20)
                     
-                    Form {
-                        ScrollView {
-                            VStack(spacing: 17) {
-                                if let fields = formFields[currentIndex] {
-                                    ForEach(fields.indices, id: \.self) { index in
-                                        fields[index]
-                                    }
-                                }
-                            }
-                        }
+                    ScrollView {
+                        formViews
+                            .padding(.horizontal)
+                    }.scrollIndicators(.hidden)
+                        .padding(.top, 30)
                         .frame(maxWidth: .infinity)
-                        .clipped()
-                    }                .padding(.horizontal)
-                        .padding(.top,25)
-                        .formStyle(.columns)
                         .background(Color.white500)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                    
-                    
-                    
+                        .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20))
                 }
                 
             }.safeAreaInset(edge: .bottom) {
@@ -77,9 +68,25 @@ struct FormView: View {
                 NavigationButtonComponent(style: .exit)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing)
-            }.fullScreenCover(isPresented: $navigateToMain) {
-                MainView()
             }
+        }
+    }
+    
+    @ViewBuilder
+    var formViews: some View {
+        switch currentIndex {
+        case 1:
+            PersonalInformationForm()
+        case 2:
+            ContactInformationForm()
+        case 3:
+            PhysicalCharacteristicsForm()
+        case 4:
+            AccountForm()
+        case 5:
+            CommitForm()
+        default:
+            EmptyView()
         }
     }
     
@@ -104,7 +111,7 @@ struct FormView: View {
         2: [
             FieldComponent(type: .textField, name: "¿Desea que sus datos sean anónimos?", placeholder: "Sí No", text: .constant(""), isRequired: true,  fontSize: .body),
             FieldComponent(type: .textField, name: "¿Cuál es su relación con la persona?", placeholder: "Seleccione una opción", text: .constant(""), fontSize: .body),
-     
+            
         ],
         3: [
             FieldComponent(type: .textField, name: "Fecha y Hora de los Hechos", placeholder: "Ingrese la fecha y hora", text: .constant(""), isRequired: true, fontSize: .body),
@@ -140,7 +147,7 @@ struct FormView: View {
             Spacer()
             if currentIndex == steps.count {
                 FormButtonComponent(style: .acept) { // Cambia a botón de "Aceptar"
-                    navigateToMain = true
+                    isPresent.toggle()
                 }
             } else {
                 FormButtonComponent(style: .next) {
@@ -158,7 +165,7 @@ struct FormView: View {
             currentIndex += 1
         }
     }
-
+    
     // Retrocede al ícono anterior
     private func previousIcon() {
         if currentIndex > 1 {
@@ -172,5 +179,5 @@ struct FormView: View {
 
 
 #Preview {
-    FormView()
+    FormView(isPresent: .constant(false))
 }

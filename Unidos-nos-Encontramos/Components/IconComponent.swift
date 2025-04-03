@@ -36,7 +36,10 @@ struct IconComponent: View {
     
     var body: some View {
         Image(systemName: style.icon)
-            .frame(minWidth: 45, minHeight: 45)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 25, height: 25)
+            .padding(10)
             .foregroundStyle(changeColor ? Color.blue300 : Color.blue50)
             .background(changeColor ? Color.blue50 : Color.blue500)
             .clipShape(Circle())

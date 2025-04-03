@@ -18,18 +18,22 @@ struct SignUpView: View {
         FormStep(icon: .file, title: "Aviso de privacidad")
     ]
     
+    @AppStorage("isLogged") private var isLogged: Bool = false
+    
     @State private var activeIcons: [Bool]
     @State private var currentIndex: Int = 1
-    @State private var navigateToMain = false
+    @Binding var isPresent: Bool
     
-    init() {
+    init(isPresent: Binding<Bool>) {
         var initialState = Array(repeating: true, count: steps.count)
         initialState[0] = false
         _activeIcons = State(initialValue: initialState)
+        _isPresent = isPresent;
     }
-
+    
     var body: some View {
         let titleForm = steps[currentIndex - 1].title
+        
         NavigationStack {
             ZStack(alignment: .top) {
                 
@@ -41,8 +45,8 @@ struct SignUpView: View {
                     BackgroundComponent(style: .white)
                         .padding(.top,400)
                 }
+                
                 VStack {
-                    
                     ProgressHeaderView(steps: steps, activeIcons: activeIcons)
                     
                     TextComponent(text: titleForm, style: .headline)
@@ -50,103 +54,76 @@ struct SignUpView: View {
                         .fontWeight(.medium)
                         .padding(.top, 20)
                     
-                    Form {
-                        ScrollView {
-                            VStack(spacing: 17) {
-                                if let fields = formFields[currentIndex] {
-                                    ForEach(fields.indices, id: \.self) { index in
-                                        fields[index]
-                                    }.padding(.horizontal)
-                                }
-                            }
-                        }
+                    ScrollView {
+                        formViews
+                            .padding(.horizontal)
+                    }.scrollIndicators(.hidden)
+                        .padding(.top, 30)
                         .frame(maxWidth: .infinity)
-                        .clipped()
-                    }
-                        .padding(.top,25)
-                        .formStyle(.columns)
                         .background(Color.white500)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                    
-                    
-                    
+                        .clipShape(UnevenRoundedRectangle(topLeadingRadius: 20, topTrailingRadius: 20))
                 }
                 
             }.safeAreaInset(edge: .bottom) {
                 bottomButtons
             }.safeAreaInset(edge: .top) {
-                NavigationButtonComponent(style: .exit)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                NavigationButtonComponent(style: .exit) {
+                    isPresent.toggle()
+                }.frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing)
-            }.fullScreenCover(isPresented: $navigateToMain) {
-                MainView()
             }
         }
     }
     
-    let formFields: [Int: [FieldComponent]] = [
-        1: [
-            FieldComponent(type: .textField, name: "Nombre", placeholder: "Ingrese su nombre", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Apellido Paterno", placeholder: "Ingrese su apellido paterno", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Apellido Materno", placeholder: "Ingrese su apellido materno", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Nacionalidad", placeholder: "Seleccione su nacionalidad", text: .constant(""),isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Fecha de Nacimiento", placeholder: "Ingrese su fecha de nacimiento", text: .constant(""), isRequired: true,  fontSize: .body),
-            FieldComponent(type: .textField, name: "Lugar de Nacimiento", placeholder: "Seleccione su lugar de nacimiento", text: .constant(""), isRequired: true,  fontSize: .body),
-            FieldComponent(type: .textField, name: "Sexo", placeholder: "Seleccione su sexo", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Género", placeholder: "Seleccione su género", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "CURP (Clave Única de Registro de Población)", placeholder: "Ingrese su CURP", text: .constant(""), fontSize: .body),
-        ],
-        2: [
-            FieldComponent(type: .textField, name: "Número de Telefono", placeholder: "Ingrese su número de telefono", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Correo Electrónico", placeholder: "Ingrese su correo electrónico", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Dirección", placeholder: "Ingrese su dirección", text: .constant(""), isRequired: true, fontSize: .body)
-        ],
-        3: [
-            FieldComponent(type: .textField, name: "Estatura (cm)", placeholder: "Ingresa tu estatura", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Peso Corporal (Kg)", placeholder: "Ingrese su peso", text: .constant(""), fontSize: .body),
-            FieldComponent(type: .textField, name: "Color de Ojos", placeholder: "Seleccione una opción", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Color de Piel", placeholder: "Seleccione una opción", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Complexión", placeholder: "Seleccione una opción", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .textField, name: "Tipo de Cabello", placeholder: "Seleccione una opción", text: .constant(""), isRequired: true, fontSize: .body),
-        ],
-        4: [
-            FieldComponent(type: .textField, name: "Fotografía", placeholder: "", text: .constant(""), fontSize: .body),
-            FieldComponent(type: .secureField(.show), name: "Contraseña", placeholder: "Ingrese una contraseña", text: .constant(""), isRequired: true, fontSize: .body),
-            FieldComponent(type: .secureField(.show), name: "Ingrese nuevamente su contraseña", placeholder: "Repita su contraseña", text: .constant(""), isRequired: true, fontSize: .body)
-        ],
-        5: [
-            FieldComponent(type: .textArea, name: "Aceptar términos", placeholder: "", text: .constant(""), fontSize: .body)
-        ]
-    ]
+    @ViewBuilder
+    var formViews: some View {
+        switch currentIndex {
+        case 1:
+            PersonalInformationForm()
+        case 2:
+            ContactInformationForm()
+        case 3:
+            PhysicalCharacteristicsForm()
+        case 4:
+            AccountForm()
+        case 5:
+            CommitForm()
+        default:
+            EmptyView()
+        }
+    }
     
     var bottomButtons: some View {
-        HStack(spacing: 20) {
+        HStack {
+            
             if currentIndex > 1 {
                 FormButtonComponent(style: .back) {
                     previousIcon()
                 }
             }
+            
             Spacer()
+            
             if currentIndex == steps.count {
                 FormButtonComponent(style: .acept) { // Cambia a botón de "Aceptar"
-                    navigateToMain = true
+                    isPresent = true
+                    isLogged = true
                 }
             } else {
                 FormButtonComponent(style: .next) {
                     nextIcon()
                 }
             }
-        }
-        .padding(.horizontal)
-        .padding(.top, 20)
+        }.padding(.horizontal)
     }
+    
     private func nextIcon() {
         if currentIndex < steps.count {
             activeIcons[currentIndex] = false
             currentIndex += 1
         }
     }
-
+    
     // Retrocede al ícono anterior
     private func previousIcon() {
         if currentIndex > 1 {
@@ -167,5 +144,5 @@ struct HLine: Shape {
 }
 
 #Preview {
-    SignUpView()
+    SignUpView(isPresent: .constant(false))
 }
