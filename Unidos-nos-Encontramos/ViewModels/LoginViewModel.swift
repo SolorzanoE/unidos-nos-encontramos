@@ -20,7 +20,7 @@ class LoginViewModel: ObservableObject {
                 method: .post,
                 endpoint: "http://localhost:8085/api/users/login"
             )
-            
+                        
             let userData = try JSONDecoder().decode(UserResponse.self, from: data)
             
             await MainActor.run { user = userData }
