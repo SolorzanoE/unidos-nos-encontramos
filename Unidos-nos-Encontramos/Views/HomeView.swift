@@ -17,12 +17,14 @@ struct HomeView: View {
     )
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             
             Map(position: $position) {
                 
                 
             }.mapStyle(.standard(pointsOfInterest: .excludingAll))
+            
+            
         }
     }
 }
