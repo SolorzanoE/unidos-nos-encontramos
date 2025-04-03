@@ -19,9 +19,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct Unidos_nos_EncontramosApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var loginViewModel = LoginViewModel()
+    
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(loginViewModel)
         }
     }
 }

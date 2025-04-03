@@ -6,14 +6,24 @@
 //
 
 import Combine
+import SwiftUI
 
 class LoginViewModel: ObservableObject {
     @Published var user: UserResponse?
+    @Published var login: Login = Login(user: "", password: "")
     
     func login(login: Login) async -> Bool {
         
         do {
-            try await ApiService.consume(body: login, method: .post, endpoint: "")
+            let data = try await ApiService.consume(body: login, method: .post, endpoint: "http://localhost:8085/api/users/login")
+            
+            let decoder = JSONDecoder()
+            
+            let userData = try decoder.decode(UserResponse.self, from: data)
+            
+            user = userData
+            
+            return true
         } catch {
             print(error.localizedDescription)
         }

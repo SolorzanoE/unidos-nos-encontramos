@@ -59,4 +59,5 @@ private struct Sidebar: View {
 
 #Preview {
     MainView()
+        .environmentObject(LoginViewModel())
 }

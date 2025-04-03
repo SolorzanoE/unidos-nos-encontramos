@@ -34,13 +34,14 @@ struct FieldComponent: View {
             }
             
             type.fieldView(text: $text, placeholder: placeholder)
+                .textInputAutocapitalization(.never)
                 .font(.custom("Montserrat", size: fontSize.size))
                 .foregroundStyle(.grey500)
                 .padding(10)
                 .background(.grey50)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
                 .shadow(color: .black.opacity(0.25), radius: 3, y: 3)
-            
+                
             if isRequired {
                 
             }
@@ -122,5 +123,5 @@ private func customPlaceholder(_ text: String) -> some View {
 }
 
 #Preview {
-    FieldComponent(type: .secureField(.show), name: "Contraseña", placeholder: "Ingresa tu contraseña", text: .constant(""), fontSize: .body)
+    FieldComponent(type: .textField, name: "Contraseña", placeholder: "Ingresa tu contraseña", text: .constant(""), fontSize: .body)
 }
