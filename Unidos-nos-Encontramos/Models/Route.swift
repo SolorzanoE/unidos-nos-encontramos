@@ -14,5 +14,5 @@ struct Route: Codable {
     let estimatedArrivalTime: Date?
     let suspiciousThreshold: Int
     let arrivalRadiusMeters: Decimal
-    let contacts: Contact
+    let contacts: [RouteContact]
 }

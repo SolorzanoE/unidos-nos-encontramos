@@ -11,11 +11,11 @@ struct Contact: Codable {
     let contactId: UUID
     let userID: UUID
     let otherUserId: UUID
-    let otherUser: OtherUser
+    let otherUser: UserSummary
     let miKinship: String
     let therKinship: String
     let createdAt: Date
-    let status: Status
+    let status: ContactStatus
     let myDefaultNotificationInterval: Int
     let otherDefaultNotificationInterval: Int
     let notificationsEnabled: Bool
