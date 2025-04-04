@@ -19,7 +19,6 @@ struct PersonalInformationForm: View {
     @State private var gender: String = ""
     @State private var curp: String = ""
     
-    
     var body: some View {
         
         ZStack {

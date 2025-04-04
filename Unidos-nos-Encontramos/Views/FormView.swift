@@ -82,15 +82,13 @@ struct FormView: View {
     var formViews: some View {
         switch currentIndex {
         case 1:
-            PersonalInformationForm()
+            PersonMinorForm()
         case 2:
-            ContactInformationForm()
+            PersonInformationForm()
         case 3:
-            PhysicalCharacteristicsForm()
+            SucessForm()
         case 4:
-            AccountForm()
-        case 5:
-            CommitForm()
+            IncidentView()
         default:
             EmptyView()
         }
