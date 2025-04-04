@@ -28,6 +28,21 @@ struct PersonMinorForm: View {
             BackgroundComponent(style: .white)
             
             VStack(spacing: 17) {
+                VStack {
+                    HStack(spacing: 2) {
+                        TextComponent(text: "Fotografia", style: .body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.grey500)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 150)
+                        .foregroundStyle(.grey500, .grey50)
+                        .shadow(color: .black.opacity(0.25), radius: 2, y: 5)
+                }
+
                
                 FieldComponent(type: .textField, name: "Nombre", placeholder: "Ingrese su nombre", text: .constant(""), isRequired: true, fontSize: .body)
                 
@@ -66,6 +81,23 @@ struct PersonMinorForm: View {
                 }
                 
                 FieldComponent(type: .textField, name: "CURP (Clave Única de Registro de Población)", placeholder: "Ingrese su CURP", text: .constant(""), fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "Nacionalidad", placeholder: "Seleccione la nacionalidad", text: .constant(""),isRequired: true, fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "Estado Civil", placeholder: "Seleccione una opción", text: .constant(""), isRequired: true,  fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "Fecha de Nacimiento", placeholder: "Ingrese la fecha de nacimiento", text: .constant(""), isRequired: true,  fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "¿Sabe leer o escribir?", placeholder: "Sí No", text: .constant(""), isRequired: true,  fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "¿Está embarazada?", placeholder: "Sí No", text: .constant(""), isRequired: true,  fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "Meses de Emabrazo", placeholder: "Ingrese los meses de embarazo", text: .constant(""), fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "RFC", placeholder: "Ingrese el RFC", text: .constant(""), fontSize: .body)
+                
+                FieldComponent(type: .textField, name: "Escolaridad", placeholder: "Seleccione una opción", text: .constant(""), fontSize: .body)
+                
             }
         }
     }
